@@ -1,0 +1,25 @@
+const {Sequelize} = require('sequelize');
+
+const sequelize = new Sequelize('mfhs','root','', {
+    host:"127.0.0.1",
+    dialect:"mysql"
+});
+// setup User model and its fields.
+const User = sequelize.define('users', {
+    id: {
+        type: Sequelize.INTEGER,
+        unique: true,
+        allowNull: false,
+        primaryKey: true,
+        autoIncrement: true
+    },
+	username: {
+        type: Sequelize.STRING,
+        unique: true,
+        allowNull: false
+    },
+    password: {
+        type: Sequelize.STRING,
+        allowNull: false
+    }
+}); 
