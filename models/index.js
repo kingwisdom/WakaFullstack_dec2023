@@ -33,6 +33,7 @@ db.sequelize = sequelize
 
 db.category = require('./categoryModel.js')(sequelize,DataTypes)
 db.places = require('./placesModel.js')(sequelize,DataTypes)
+db.cities = require('./cityModel.js')(sequelize,DataTypes)
 
 db.sequelize.sync({force:false})
 .then(() => {

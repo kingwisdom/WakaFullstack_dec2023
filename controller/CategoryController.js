@@ -8,8 +8,11 @@ const addCategory = async(req, res) => {
     }
 
     const cats = await Category.create(model);
-    res.status(200).send(cats);
-
+    res.status(200).send({
+        status: true,
+        response: "Category Posted Successfully!",
+        returnObj:null
+    });
     console.log(cats);
 }
 

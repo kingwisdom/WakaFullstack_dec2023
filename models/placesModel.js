@@ -17,6 +17,10 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.STRING,
             allowNull: true
         },
+        city: {
+            type: DataTypes.STRING,
+            allowNull: true
+        },
         address: {
             type: DataTypes.STRING,
             allowNull: false
@@ -28,10 +32,8 @@ module.exports = (sequelize, DataTypes) => {
         website: {
             type: DataTypes.STRING,
             allowNull: false
-        },
-        published: {
-            type: DataTypes.BOOLEAN
         }
+        
     })
 
     return Places

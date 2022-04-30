@@ -4,7 +4,7 @@ const cors = require('cors')
 const app = express();
 
 var corsOptions = {
-    origin: 'https://localhost:8000'
+    origin: 'http://localhost:3000'
 }
 
 
@@ -17,8 +17,10 @@ app.use(express.urlencoded({extended:true}))
  //router
 const router = require('./routes/placeRouter.js');
 const catrouter = require('./routes/catRouter.js');
+const cityrouter = require('./routes/cityRouter.js');
 app.use('/api/places', router);
 app.use('/api/category', catrouter);
+app.use('/api/city', cityrouter);
 
 
 //port
