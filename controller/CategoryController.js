@@ -4,7 +4,7 @@ const Category = db.category;
 
 const addCategory = async(req, res) => {
     let model = {
-        name:req.body.name
+        name:req.body.name 
     }
 
     const cats = await Category.create(model);

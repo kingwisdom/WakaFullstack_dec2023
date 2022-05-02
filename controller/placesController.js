@@ -6,8 +6,10 @@ const addPlaces = async (req, res) => {
     let model = {
         title:req.body.title,
         imageUrl:req.body.imageUrl,
+        code: "009",
         address:req.body.address,
         category:req.body.category,
+        city:req.body.city,
         website:req.body.website,
         phoneNumber:req.body.phoneNumber,
         published:req.body.published ? req.body.published : false
@@ -29,8 +31,12 @@ const addPlaces = async (req, res) => {
     // });
 
     const place = await Places.create(model);
-    res.status(200).send(place);
-
+    res.status(200).send({
+        status: true,
+        response: "Place Posted Successfully!",
+        returnObj:place
+    });
+    
     //console.log(place);
 }
 
