@@ -5,6 +5,7 @@ const app = express();
 
 var corsOptions = {
     origin: 'http://localhost:3000'
+   // origin: 'https://wakaadmin.vercel.app'
 }
 
 
@@ -18,7 +19,7 @@ app.use(express.urlencoded({extended:true}))
 const router = require('./routes/placeRouter.js');
 const catrouter = require('./routes/catRouter.js');
 const cityrouter = require('./routes/cityRouter.js');
-app.use('/api/places', router);
+app.use('/api/place', router);
 app.use('/api/category', catrouter);
 app.use('/api/city', cityrouter);
 
@@ -32,3 +33,4 @@ const PORT = process.env.PORT || 5000
 app.listen(PORT, () => {
     console.log(`server is running on port ${PORT}`)
 })
+//app.listen();

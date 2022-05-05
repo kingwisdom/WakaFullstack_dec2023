@@ -9,7 +9,7 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.STRING,
             allowNull: true
         },
-        code: {
+        uniqueId: {
             type: DataTypes.STRING,
             allowNull: true
         },
@@ -27,11 +27,15 @@ module.exports = (sequelize, DataTypes) => {
         },
         phoneNumber: {
             type: DataTypes.STRING,
-            allowNull: false
+            allowNull: true
         },
-        website: {
+        searchedTimes: {
+            type: DataTypes.INTEGER,
+            allowNull: true
+        },
+        postedBy: {
             type: DataTypes.STRING,
-            allowNull: false
+            allowNull: true
         }
         
     })

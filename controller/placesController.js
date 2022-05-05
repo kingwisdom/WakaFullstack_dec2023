@@ -1,31 +1,32 @@
+const { randomUUID } = require('crypto');
 const db = require('../models')
 
 const Places = db.places;
-
+ 
 const addPlaces = async (req, res) => {
     let model = {
         title:req.body.title,
         imageUrl:req.body.imageUrl,
-        code: "009",
+        code: randomUUID(),
         address:req.body.address,
         category:req.body.category,
         city:req.body.city,
-        website:req.body.website,
         phoneNumber:req.body.phoneNumber,
-        published:req.body.published ? req.body.published : false
+        published:req.body.published ? req.body.published : false,
+        postedBy:"Web"
     }
 
     // publicPaces.forEach(element => {
     //     let model = {
     //         title:element.Name,
-    //         code:element.Id,
-    //         imageUrl:'https://i.pinimg.com/474x/cd/8f/e4/cd8fe461b6d848f56513578020fe3c96.jpg',
-    //         city:'Lagos',
+    //         uniqueId:randomUUID(),
+    //         imageUrl:element.ImageUrl,
+    //         city:element.City.Name,
     //         address:element.FullAddress,
     //         category:element.Description,
-    //         website:"",
-    //         phoneNumber:"08167927876",
-    //         published:true
+    //         phoneNumber:element.PhoneNumber,
+    //         published:true,
+    //         postedBy: element.PostedBy
     //     }
     //      Places.create(model);
     // });
@@ -55,8 +56,13 @@ const getPlaceInCategory = async(req, res) =>{
     let category = req.body.category;
     console.log(category);
     let place = await Places.findAll({where: {category: category}});
-    res.status(200).send(place);
-}
+    
+    res.status(200).send({
+        status: true,
+        response: null,
+        returnObj:place
+    });
+} 
 
 //update
 const updatePlace = async(req, res) =>{
