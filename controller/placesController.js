@@ -13,7 +13,7 @@ const addPlaces = async (req, res) => {
         city:req.body.city,
         phoneNumber:req.body.phoneNumber,
         published:req.body.published ? req.body.published : false,
-        postedBy:"Web"
+        postedBy:req.body.postedBy
     }
 
     // publicPaces.forEach(element => {
@@ -48,15 +48,26 @@ const getAllPlaces = async(req, res) =>{
 
 const getAPlace = async(req, res) =>{
     let id = req.params.id;
-    let place = await Places.findOne({where: {id: id}});
+    let place = await Places.findOne({where: {uniqueId: id}});
     res.status(200).send(place);
 }
 
 const getPlaceInCategory = async(req, res) =>{
-    let category = req.body.category;
+    let category = req.params.category;
     console.log(category);
     let place = await Places.findAll({where: {category: category}});
-    
+     
+    res.status(200).send({
+        status: true,
+        response: null,
+        returnObj:place
+    });
+} 
+const getPlaceInCities = async(req, res) =>{
+    let city = req.params.city;
+    console.log(city);
+    let place = await Places.findAll({where: {city: city}});
+     
     res.status(200).send({
         status: true,
         response: null,
@@ -84,6 +95,7 @@ module.exports = {
     getAPlace,
     getAllPlaces,
     getPlaceInCategory,
+    getPlaceInCities,
     updatePlace,
     deletePlace
 }
