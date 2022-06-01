@@ -17,10 +17,9 @@
 module.exports = {
     HOST:'localhost',
     USER:'root',
-    PASSWORD:'',
+    PASSWORD:'@Afe4132my@Afe4132my',
     DB:'waka_db',
     dialect:'mysql',
-
     pool:{
         max:5,
         min:0,

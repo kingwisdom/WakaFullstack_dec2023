@@ -1,23 +1,24 @@
 
 module.exports = (sequelize, DataTypes) => {
     const Places = sequelize.define('places', {
-        title: {
-            type: DataTypes.STRING,
+        id: {
+            type: DataTypes.UUID,
+            primaryKey: true,
             allowNull: false
         },
         imageUrl: {
             type: DataTypes.STRING,
             allowNull: true
         },
-        uniqueId: {
+        name: {
             type: DataTypes.STRING,
             allowNull: true
         },
-        category: {
+        categoryId: {
             type: DataTypes.STRING,
             allowNull: true
         },
-        city: {
+        cityId: {
             type: DataTypes.STRING,
             allowNull: true
         },

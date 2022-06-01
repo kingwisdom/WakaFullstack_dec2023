@@ -1,18 +1,18 @@
-const { randomUUID } = require('crypto');
+const uuid = require('uuid');
 const db = require('../models')
 
 const Places = db.places;
  
 const addPlaces = async (req, res) => {
     let model = {
-        title:req.body.title,
+        id: uuid.v4(),
         imageUrl:req.body.imageUrl,
-        code: randomUUID(),
+        name:req.body.title,
         address:req.body.address,
-        category:req.body.category,
-        city:req.body.city,
+        categoryId:req.body.category,
+        cityId:req.body.city,
         phoneNumber:req.body.phoneNumber,
-        published:req.body.published ? req.body.published : false,
+        searchedTimes:req.body.searchedTimes,
         postedBy:req.body.postedBy
     }
 
@@ -43,6 +43,7 @@ const addPlaces = async (req, res) => {
 
 const getAllPlaces = async(req, res) =>{
     let places = await Places.findAll({});
+    console.log('my places', places)
     res.status(200).send(places);
 }
 
