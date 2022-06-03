@@ -1,9 +1,11 @@
 const db = require('../models')
+const uuid = require('uuid')
 
 const Category = db.category;
 
 const addCategory = async(req, res) => {
     let model = {
+        id: uuid.v4(),
         name:req.body.name 
     }
 
@@ -13,7 +15,6 @@ const addCategory = async(req, res) => {
         response: "Category Posted Successfully!",
         returnObj:null
     });
-    console.log(cats);
 }
 
 const getAllCategory = async(req, res) =>{

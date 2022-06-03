@@ -29,11 +29,7 @@ const router = require('express').Router();
  *         type: string
  * 
  */
-
-
-
-
-
+//=============================================================================================================
 
 /**
  * @swagger
@@ -67,12 +63,129 @@ router.get('/allPlaces', placesController.getAllPlaces);
  * 
  */
 router.post('/addPlaces', placesController.addPlaces);
-router.get('/categoryplace/:category', placesController.getPlaceInCategory);
-router.get('/cityplace/:city', placesController.getPlaceInCities);
 
+/**
+ * @swagger
+ * /api/place/categoryplace/{id}:
+ *   get:
+ *     description: Get places by category
+ *     parameters:
+ *       - name: id
+ *         description: Category Id
+ *         in: path
+ *         required: true
+ *     responses:
+ *       200:
+ *         description: A places oject
+ *         schema:
+ *           $ref: '#/definitions/Place'
+ * 
+ */
+router.get('/categoryplace/:categoryId', placesController.getPlaceInCategory);
+
+
+/**
+ * @swagger
+ * /api/place/cityplace/{id}:
+ *   get:
+ *     description: Get places by city
+ *     parameters:
+ *       - name: id
+ *         description: City Id
+ *         in: path
+ *         required: true
+ *     responses:
+ *       200:
+ *         description: A places oject
+ *         schema:
+ *           $ref: '#/definitions/Place'
+ * 
+ */
+router.get('/cityplace/:cityId', placesController.getPlaceInCities);
+
+/**
+ * @swagger
+ * /api/place/{id}:
+ *   get:
+ *     description: Get places by id
+ *     parameters:
+ *       - name: id
+ *         description: Place Id
+ *         in: path
+ *         required: true
+ *     responses:
+ *       200:
+ *         description: A places oject
+ *         schema:
+ *           $ref: '#/definitions/Place'
+ * 
+ */
 router.get('/:id', placesController.getAPlace);
-router.get('/:id', placesController.updatePlace);
-router.get('/:id', placesController.deletePlace);
+
+/**
+ * @swagger
+ * /api/place/{id}:
+ *   put:
+ *     description: Update a place
+ *     produces: application/json
+ *     parameters:
+ *       - name: id
+ *         description: Place Id
+ *         in: path
+ * 
+ *       - name: place
+ *         description: Place
+ *         in: body
+ *         schema:
+ *           $ref: '#/definitions/Place'
+ *     responses:
+ *       200:
+ *         description: A places oject
+ *         schema:
+ *           $ref: '#/definitions/Place'
+ * 
+ */
+router.put('/:id', placesController.updatePlace);
+
+
+/**
+ * @swagger
+ * /api/place/{id}:
+ *   delete:
+ *     description: Remove a place
+ *     parameters:
+ *       - name: id
+ *         description: Place Id
+ *         in: path
+ *         required: true
+ *     responses:
+ *       200:
+ *         description: A places object
+ *         schema:
+ *           $ref: '#/definitions/Place'
+ * 
+ */
+router.delete('/:id', placesController.deletePlace);
+
+/**
+ * @swagger
+ * /api/place/bulkUpload/{id}:
+ *   delete:
+ *     description: Bulk upload from file or Test API
+ *     parameters:
+ *       - name: id
+ *         description: true or false
+ *         in: path
+ *         required: true
+ *         type: boolean
+ *     responses:
+ *       200:
+ *         description: A places object
+ *         schema:
+ *           $ref: '#/definitions/Place'
+ * 
+ */
+router.delete('/bulkUpload/:isTest', placesController.bulkPlaceUploadFromFile);
 
 
 

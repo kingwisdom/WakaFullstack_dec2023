@@ -12,7 +12,7 @@ const swaggerOptions = {
           version:'1.0.0'
       }
   },
-  apis: ['routes/placeRouter.js']
+  apis: ['routes/placeRouter.js', 'routes/catRouter.js', 'routes/cityRouter.js']
 };
 
 //Swagger Docs
@@ -41,7 +41,7 @@ const cityrouter = require('./routes/cityRouter.js');
 app.use('/api/place', placerouter);
 app.use('/api/category', catrouter);
 app.use('/api/city', cityrouter);
-app.use('/api/city', cityrouter);
+//app.use('/api/city', cityrouter);
 
 
 
