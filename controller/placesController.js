@@ -18,21 +18,6 @@ const addPlaces = async (req, res) => {
         postedBy:req.body.postedBy
     }
 
-    // publicPaces.forEach(element => {
-    //     let model = {
-    //         title:element.Name,
-    //         uniqueId:randomUUID(),
-    //         imageUrl:element.ImageUrl,
-    //         city:element.City.Name,
-    //         address:element.FullAddress,
-    //         category:element.Description,
-    //         phoneNumber:element.PhoneNumber,
-    //         published:true,
-    //         postedBy: element.PostedBy
-    //     }
-    //      Places.create(model);
-    // });
-
     const place = await Places.create(model);
     res.status(200).send({
         status: true,
@@ -40,7 +25,6 @@ const addPlaces = async (req, res) => {
         returnObj:place
     });
     
-    //console.log(place);
 }
 
 const getAllPlaces = async(req, res) =>{
@@ -48,6 +32,34 @@ const getAllPlaces = async(req, res) =>{
     console.log('my places', places)
     res.status(200).send(places);
 }
+
+const groupBy = function(xs, key) {
+    return xs.reduce(function(rv, x) {
+      (rv[x[key]] = rv[x[key]] || []).push(x);
+      return rv;
+    }, {});
+  };
+
+ const getPlaceCategorization = async(req, res) =>{
+    let sql = 'SELECT waka_db.categories.name AS categoryName, waka_db.places.id AS placeId FROM waka_db.categories JOIN waka_db.places ON waka_db.categories.id = waka_db.places.categoryId;'
+    let placeCat = await db.sequelize.query(sql);
+    let grouping = placeCat[0].reduce((group, place) => {
+        const { categoryName } = place;
+        group[categoryName] = group[categoryName] ?? [];
+        group[categoryName].push(place);
+        return group;
+      }, {});
+      let resModel = [];
+      Object.entries(grouping).forEach(element => {
+          resModel.push( {categoryName:element[0], count:element[1].length})
+      });
+    res.status(200).send({
+        status: true,
+        response: "Successful",
+        returnObj:resModel
+    });
+}
+
 
 const getAPlace = async(req, res) =>{
     let id = req.params.id;
@@ -128,5 +140,6 @@ module.exports = {
     getPlaceInCities,
     updatePlace,
     deletePlace,
-    bulkPlaceUploadFromFile
+    bulkPlaceUploadFromFile,
+    getPlaceCategorization
 }

@@ -29,6 +29,18 @@ const router = require('express').Router();
  *         type: string
  * 
  */
+
+/**
+ * @swagger
+ * definitions:
+ *   PlacesInCategory:
+ *     properties:
+ *       catogoryName:
+ *         type: string
+ *       count:
+ *         type: integer
+ * 
+ */
 //=============================================================================================================
 
 /**
@@ -44,6 +56,21 @@ const router = require('express').Router();
  * 
  */
 router.get('/allPlaces', placesController.getAllPlaces);
+
+/**
+ * @swagger
+ * /api/place/placeInCat:
+ *   get:
+ *     description: Get Places count in Category
+ *     responses:
+ *       200:
+ *         description: Array of Places categories
+ *         schema:
+ *           $ref: '#/definitions/PlacesInCategory'
+ * 
+ */
+ router.get('/placeInCat', placesController.getPlaceCategorization);
+
 
 /**
  * @swagger
