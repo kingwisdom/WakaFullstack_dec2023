@@ -22,8 +22,8 @@ console.log(swaggerDocument);
 const app = express();
 
 var corsOptions = {
-    //origin: 'http://localhost:3000'
-    origin: 'https://wakaadmin.vercel.app'
+    origin: 'http://localhost:3000'
+   // origin: 'https://wakaadmin.vercel.app'
 }
 
 app.use(cors(corsOptions))
@@ -49,7 +49,7 @@ app.use('/api/city', cityrouter);
 const PORT = process.env.PORT || 5000
 
 //server
-// app.listen(PORT, () => {
-//     console.log(`server is running on port ${PORT}`)
-// })
-app.listen();
+app.listen(PORT, () => {
+    console.log(`server is running on port ${PORT}`)
+})
+//app.listen();

@@ -1,8 +1,7 @@
 const uuid = require('uuid');
-const { places, cities,category } = require('../models');
+const { places } = require('../models');
 const db = require('../models')
 const filePlaces = require('./places')
-const fileCats = require('./categories')
 
 const Places = db.places;
  
@@ -42,7 +41,7 @@ const groupBy = function(xs, key) {
   };
 
  const getPlaceCategorization = async(req, res) =>{
-    let sql = 'SELECT productd_waka.categories.id AS categoryId, productd_waka.categories.name AS categoryName, productd_waka.places.id AS placeId FROM productd_waka.categories JOIN productd_waka.places ON productd_waka.categories.id = productd_waka.places.categoryId;'
+    let sql = 'SELECT waka_db.categories.name AS categoryName, waka_db.places.id AS placeId FROM waka_db.categories JOIN waka_db.places ON waka_db.categories.id = waka_db.places.categoryId;'
     let placeCat = await db.sequelize.query(sql);
     let grouping = placeCat[0].reduce((group, place) => {
         const { categoryName } = place;
@@ -52,7 +51,7 @@ const groupBy = function(xs, key) {
       }, {});
       let resModel = [];
       Object.entries(grouping).forEach(element => {
-          resModel.push( {categoryId:element[1][0].categoryId, categoryName:element[0], count:element[1].length})
+          resModel.push( {categoryName:element[0], count:element[1].length})
       });
     res.status(200).send({
         status: true,
@@ -106,65 +105,22 @@ const deletePlace = async(req, res) =>{
 
 const bulkPlaceUploadFromFile = async(req, res) =>{
     let assertain = req.params.isTest;
-    let city = []
-    let categories = []
-
-    //console.log(assertain);
+    console.log(assertain);
     if (assertain == 'true') {
         for (let i = 0; i < filePlaces.length; i++) {
-           
-            let res = city.map(e => e.id === filePlaces[i].CityId)
-                    let modCity = {
-                        id : filePlaces[i].City.Id,
-                        name : filePlaces[i].City.Name,
-                    }
-              if (!res[0]) {
-                        city.push(modCity);
-                    }
-                // console.log(res);
-            
-            //categories.forEach((cat)=>{
-                // let cars = categories.map(cat=> cat.name === filePlaces[i].Description)
-                //     let catId = {
-                //         id: cat.id,
-                //         name:filePlaces[i].Description
-                //     }
-
-                //     console.log(catId);
-                 
-                //     if(!cars[0]){
-                //         categories.push(catId);
-                        
-                //     }
-                
-           // })
-            
-            let model = { 
+            let model = {
                 id: filePlaces[i].Id,
                 imageUrl:filePlaces[i].ImageUrl,
                 name:filePlaces[i].Name,
                 address:filePlaces[i].FullAddress,
-                categoryId: fileCats.find(er=>er.name ==filePlaces[i].Description) !=null ? fileCats.find(er=>er.name ==filePlaces[i].Description).id : null, 
+                categoryId:filePlaces[i].categoryId,
                 cityId:filePlaces[i].CityId,
                 phoneNumber:filePlaces[i].PhoneNumber,
                 searchedTimes:filePlaces[i].SearchedTimes,
                 postedBy:filePlaces[i].PostedBy
             }
-             const pp = await places.create(model);  
+            const pp = await places.create(model);      
         }
-
-        //console.log("xategory",categories);
-        //console.log("city:",city);
-
-        city.forEach((c) => {
-             cities.create(c); 
-        })
-        fileCats.forEach((c) => {
-             category.create(c); 
-        })
-            
-        // await category.create(categories);  
-
         res.status(200).send({
             status: true,
             response: "Bulk Upload Successful"
