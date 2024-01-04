@@ -7,7 +7,7 @@ const Onboard = () => {
             <div className="boarding-section">
                 <div className="tf-container">
                     <div className="images">
-                        {/* <img src="images/boarding/boarding1.png" alt="image" /> */}
+                        <img src="assets/images/logo.png" style={{ width: 40, height: 40 }} alt="image" />
                     </div>
                 </div>
             </div>

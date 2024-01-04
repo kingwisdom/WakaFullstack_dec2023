@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
-import { GetAllPlaces } from '../service/app_service'
+import { GetAllPlaces, GetCategoryPlaces } from '../service/app_service'
 
-const AllPlaces = () => {
-
+const CategoryPlaces = () => {
+    const id = window.location.pathname.split('/')[2];
     const [loading, setLoading] = useState(false)
     const [places, setPlaces] = useState([])
     useEffect(() => {
@@ -12,7 +12,7 @@ const AllPlaces = () => {
 
     const getPlace = () => {
         setLoading(true)
-        GetAllPlaces().then((resp) => {
+        GetCategoryPlaces(id).then((resp) => {
             setPlaces(resp.data.returnObj)
             // console.log(resp.data)
         }).catch(err => {
@@ -67,4 +67,4 @@ const AllPlaces = () => {
     )
 }
 
-export default AllPlaces
+export default CategoryPlaces
