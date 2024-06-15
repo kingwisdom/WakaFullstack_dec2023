@@ -33,7 +33,7 @@ const Menu = () => {
                     </div>
                 </div>
             </div>
-            <div id="app-wrap" className="style1">
+            <div id="app-wrap mt-4" className="style1">
                 <div className="tf-container">
                     <div className="tf-tab">
                         <div className="content-tab mb-5">

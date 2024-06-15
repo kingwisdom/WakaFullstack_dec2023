@@ -8,6 +8,7 @@ import AppRoute from '../layout/AppRoute'
 import PlaceDetails from '../pages/PlaceDetails'
 import CategoryPlaces from '../pages/CategoryPlaces'
 import About from '../pages/About'
+import Traffic from '../pages/Traffic'
 
 
 const Router = () => {
@@ -20,6 +21,7 @@ const Router = () => {
             <Route element={<AppRoute />}>
                 <Route path='/menu' element={<Menu />}></Route>
                 <Route path="/all" element={<AllPlaces />} />
+                <Route path="/traffic" element={<Traffic />} />
                 {/* <Route path="/place-details" element={<PlaceDetails />} /> */}
                 <Route path="/place/:id" element={<PlaceDetails />} />
                 <Route path="/category-places/:id" element={<CategoryPlaces />} />

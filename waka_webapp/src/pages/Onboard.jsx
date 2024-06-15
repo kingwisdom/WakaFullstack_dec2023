@@ -17,7 +17,7 @@ const Onboard = () => {
                         <h1 className="tf-title">WAKA</h1>
                         <p>The app that makes integration easy for new immigrant in Nigeria</p>
                     </div>
-                    <Link to={'/menu'} className="tf-btn accent large">Continue</Link>
+                    <Link to={'/traffic'} className="tf-btn accent large">Continue</Link>
                 </div>
             </div>
         </div>
