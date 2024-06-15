@@ -21,17 +21,20 @@ const Traffic = () => {
             .then(res => res.json())
             .then(result => {
                 setIsLoading(false);
+                console.log(result)
                 const returnObj = trafficAnalysis(result)
                 console.log(returnObj)
                 setDATA(returnObj);
-                setTo('');
-                setFrom('');
+                // setTo('');
+                // setFrom('');
             })
             .catch(error => {
                 setIsLoading(false);
                 setError(error);
-                setTo('');
-                setFrom('');
+                console.log(error);
+
+                setTo("");
+                setFrom("");
             });
 
     }
@@ -95,8 +98,10 @@ const Traffic = () => {
                 ),
                 distance: `${Math.round(majorRoutes[i].travelDistance)}km`,
                 via: majorRoutes[i].routeLegs[0].description,
+                startLocation: majorRoutes[i].routeLegs[0].startLocation?.address.formattedAddress,
+                endLocation: majorRoutes[i].routeLegs[0].endLocation?.address.formattedAddress
             };
-            // console.log(routeData);
+
             returnedRouteData.push(routeData);
         }
         return returnedRouteData;
@@ -132,60 +137,62 @@ const Traffic = () => {
                     <h4 className='text-center mb-5'>Real Time Traffic</h4>
                     <div className="food-box">
                         {DATA.map((item, i) => (
-                            <div className='card card-body mb-2'>
-                                <div className="row" key={i}>
-                                    <div className="col-3">
-                                        <div className="img-box">
-                                            <img src={'https://previews.123rf.com/images/scusi/scusi1803/scusi180300003/96678344-road-traffic-in-the-city-illustration.jpg'} alt="images" />
-                                        </div>
-                                    </div>
-                                    <div className="col-9">
-                                        <div className="p-3">
-                                            <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
-                                                <i className="fa fa-circle" style={{ color: item?.trafficColor, fontSize: 18 }} ></i>
-                                                {/* color= /> */}
-                                                <p
-                                                    style={{
-                                                        fontSize: 18,
-                                                        fontWeight: '600',
-                                                        color: '#000',
-                                                        marginLeft: 20,
-                                                    }}>
 
-                                                    {item?.trafficStatus}
-                                                </p>
+                            <a href={`https://www.google.com/maps/dir/${item?.startLocation},+Nigeria/${item?.endLocation},+Lagos,+Nigeria`}>
+                                <div className='card card-body mb-2'>
+                                    <div className="row" key={i}>
+                                        <div className="col-3">
+                                            <div className="img-box">
+                                                <img src={'https://previews.123rf.com/images/scusi/scusi1803/scusi180300003/96678344-road-traffic-in-the-city-illustration.jpg'} alt="images" />
                                             </div>
-                                            <p>
-                                                {item?.via}
-                                            </p>
-                                            <hr />
-                                            <div className="d-flex justify-content-between">
-                                                <i className="fa fa-car" style={{ color: 'red', fontSize: 24 }} ></i>
-                                                <div>
-                                                    <div className="d-flex">
-                                                        <p>Normal Time:</p>&nbsp;&nbsp;<strong style={{ color: '#000' }}>
-                                                            {item?.normalTime}
-                                                        </strong>
-                                                    </div>
-                                                    <div className="d-flex">
-                                                        <p>Traffic Time:</p> &nbsp; &nbsp;<strong style={{ color: '#000' }}>
-                                                            {item?.trafficTime}
-                                                        </strong>
+                                        </div>
+                                        <div className="col-9">
+                                            <div className="p-3">
+                                                <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
+                                                    <i className="fa fa-circle" style={{ color: item?.trafficColor, fontSize: 18 }} ></i>
+                                                    {/* color= /> */}
+                                                    <p
+                                                        style={{
+                                                            fontSize: 18,
+                                                            fontWeight: '600',
+                                                            color: '#000',
+                                                            marginLeft: 20,
+                                                        }}>
+                                                        {item?.trafficStatus}
+                                                    </p>
+                                                </div>
+                                                <p>
+                                                    {item?.via}
+                                                </p>
+                                                <hr />
+                                                <div className="d-flex justify-content-between">
+                                                    <i className="fa fa-car" style={{ color: 'red', fontSize: 24 }} ></i>
+                                                    <div>
+                                                        <div className="d-flex">
+                                                            <p>Normal Time:</p>&nbsp;&nbsp;<strong style={{ color: '#000' }}>
+                                                                {item?.normalTime}
+                                                            </strong>
+                                                        </div>
+                                                        <div className="d-flex">
+                                                            <p>Traffic Time:</p> &nbsp; &nbsp;<strong style={{ color: '#000' }}>
+                                                                {item?.trafficTime}
+                                                            </strong>
+                                                        </div>
                                                     </div>
                                                 </div>
-                                            </div>
-                                            <hr />
+                                                <hr />
 
-                                            <div className="d-flex justify-content-between">
-                                                <p>Distance:</p>
-                                                <p style={{ color: '#000' }}> {item?.trafficTime}
-                                                </p>
-                                            </div>
+                                                <div className="d-flex justify-content-between">
+                                                    <p>Distance:</p>
+                                                    <p style={{ color: '#000' }}> {item?.trafficTime}
+                                                    </p>
+                                                </div>
 
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
+                            </a>
                         ))}
 
 
