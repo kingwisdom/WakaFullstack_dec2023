@@ -1,6 +1,5 @@
 import React, { useState } from 'react'
 import GooglePlacesAutocomplete from 'react-google-places-autocomplete';
-import { Link } from 'react-router-dom'
 
 const Traffic = () => {
     let [isLoading, setIsLoading] = useState(false);
@@ -25,7 +24,7 @@ const Traffic = () => {
                 setIsLoading(false);
                 console.log(result)
                 const returnObj = trafficAnalysis(result)
-                console.log(returnObj)
+                // console.log(returnObj)
                 setDATA(returnObj);
                 // setTo('');
                 // setFrom('');
@@ -48,8 +47,8 @@ const Traffic = () => {
         }
         let timeres =
             timeArr[0] == '00' || timeArr[0] == '0'
-                ? `${timeArr[1]}mn ${timeArr[2]}s`
-                : `${timeArr[0]}hr ${timeArr[1]}mn ${timeArr[2]}s`;
+                ? `${timeArr[1]} mins`
+                : `${timeArr[0]}hr ${timeArr[1]} mins`;
         return timeres;
     };
 
@@ -149,12 +148,11 @@ const Traffic = () => {
                     </form>
 
                     <hr />
-
                     <h4 className='text-center mb-5'>Real Time Traffic</h4>
                     <div className="food-box">
                         {DATA.map((item, i) => (
 
-                            <a href={`https://www.google.com/maps/dir/${item?.startLocation},+Nigeria/${item?.endLocation},+Lagos,+Nigeria`} key={i}>
+                            <a href={`https://www.google.com/maps/dir/${from.label}/${to?.label}`} target='_blank' key={i}>
                                 <div className='card card-body mb-2'>
                                     <div className="row" >
                                         <div className="col-3">
@@ -200,7 +198,7 @@ const Traffic = () => {
 
                                                 <div className="d-flex justify-content-between">
                                                     <p>Distance:</p>
-                                                    <p style={{ color: '#000' }}> {item?.trafficTime}
+                                                    <p style={{ color: '#000' }}> {item?.distance}
                                                     </p>
                                                 </div>
 
