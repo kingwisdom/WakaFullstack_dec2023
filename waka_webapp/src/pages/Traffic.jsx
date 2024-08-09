@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import GooglePlacesAutocomplete from 'react-google-places-autocomplete';
 import { Link } from 'react-router-dom'
 
 const Traffic = () => {
@@ -11,12 +12,13 @@ const Traffic = () => {
 
     const handleSearch = (e) => {
         e.preventDefault();
+        // console.log(to.label, from.label)
         if (!from || !to) {
             return window.alert("Please fill your location")
         }
         setIsLoading(true)
         fetch(
-            `https://dev.virtualearth.net/REST/V1/Routes/Driving?o=json&wp.0=${from + " Lagos, Nigeria"}&wp.1=${to + " Lagos, Nigeria"}&maxSolns=3&optmz=timeWithTraffic&key=AjFc0im6uSRCTMsEeyIcgHnTlc-E1O42J0G0mIVeU65vDw1cmc_eHB-8z8xh7tRo#`,
+            `https://dev.virtualearth.net/REST/V1/Routes/Driving?o=json&wp.0=${from.label}&wp.1=${to?.label}&maxSolns=3&optmz=timeWithTraffic&key=AjFc0im6uSRCTMsEeyIcgHnTlc-E1O42J0G0mIVeU65vDw1cmc_eHB-8z8xh7tRo#`,
         )
             .then(res => res.json())
             .then(result => {
@@ -123,11 +125,25 @@ const Traffic = () => {
                     <form onSubmit={handleSearch}>
                         <div className="form-group">
                             <label htmlFor="">Current Location*</label>
-                            <input type="text" onChange={(e) => setFrom(e.target.value)} className="form-control" placeholder='Current Location' />
+                            <GooglePlacesAutocomplete
+                                selectProps={{
+                                    from,
+                                    onChange: setFrom,
+                                }}
+                                className="form-control" placeholder='Current Location'
+                                apiKey="AIzaSyDdPA4KvHJqpbTOI2Ed_wve_eUIGh9w5p0"
+                            />
                         </div>
                         <div className="form-group mt-3">
                             <label htmlFor="">Destination *</label>
-                            <input type="text" onChange={(e) => setTo(e.target.value)} className="form-control" placeholder='Destination' />
+                            <GooglePlacesAutocomplete
+                                selectProps={{
+                                    to,
+                                    onChange: setTo,
+                                }}
+                                className="form-control" placeholder='Destination'
+                                apiKey="AIzaSyDdPA4KvHJqpbTOI2Ed_wve_eUIGh9w5p0"
+                            />
                         </div>
                         <button type='submit' className='btn btn-warning btn-border-round mt-3'>{isLoading ? 'Getting Details...' : 'Locate'}</button>
                     </form>
@@ -138,9 +154,9 @@ const Traffic = () => {
                     <div className="food-box">
                         {DATA.map((item, i) => (
 
-                            <a href={`https://www.google.com/maps/dir/${item?.startLocation},+Nigeria/${item?.endLocation},+Lagos,+Nigeria`}>
+                            <a href={`https://www.google.com/maps/dir/${item?.startLocation},+Nigeria/${item?.endLocation},+Lagos,+Nigeria`} key={i}>
                                 <div className='card card-body mb-2'>
-                                    <div className="row" key={i}>
+                                    <div className="row" >
                                         <div className="col-3">
                                             <div className="img-box">
                                                 <img src={'https://previews.123rf.com/images/scusi/scusi1803/scusi180300003/96678344-road-traffic-in-the-city-illustration.jpg'} alt="images" />
