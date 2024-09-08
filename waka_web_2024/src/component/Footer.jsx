@@ -9,28 +9,36 @@ const Footer = () => {
     <div className="w-full sm:w-[65%] sm:left-[18%] bg-white shadow-md fixed bottom-0">
       <div className="flex justify-around p-2">
         {/* Traffic Icon */}
-        <button className="flex flex-col items-center text-yellow-500">
-          <PiTrafficSignFill />
-          <span className="text-xs font-medium">Traffic</span>
-        </button>
+        <a href="/">
+          <button className="flex flex-col items-center text-yellow-500">
+            <PiTrafficSignFill />
+            <span className="text-xs font-medium">Traffic</span>
+          </button>
+        </a>
 
         {/* Parking Icon */}
-        <button className="flex flex-col items-center text-gray-500 hover:text-yellow-500">
-          <TbMapPins />
-          <span className="text-xs font-medium">Parking</span>
-        </button>
+        <a href="/places">
+          <button className="flex flex-col items-center text-gray-500 hover:text-yellow-500">
+            <TbMapPins />
+            <span className="text-xs font-medium">Popular places</span>
+          </button>
+        </a>
 
         {/* Messages Icon */}
-        <button className="flex flex-col items-center text-gray-500 hover:text-yellow-500">
-          <SiChatbot />
-          <span className="text-xs font-medium">Messages</span>
-        </button>
+        <a href="https://mimic-ai.vercel.app/">
+          <button className="flex flex-col items-center text-gray-500 hover:text-yellow-500">
+            <SiChatbot />
+            <span className="text-xs font-medium">AI Chat</span>
+          </button>
+        </a>
 
         {/* Profile Icon */}
-        <button className="flex flex-col items-center text-gray-500 hover:text-yellow-500">
-          <FaUser />
-          <span className="text-xs font-medium">Profile</span>
-        </button>
+        <a href="/about">
+          <button className="flex flex-col items-center text-gray-500 hover:text-yellow-500">
+            <FaUser />
+            <span className="text-xs font-medium">About</span>
+          </button>
+        </a>
       </div>
     </div>
   );

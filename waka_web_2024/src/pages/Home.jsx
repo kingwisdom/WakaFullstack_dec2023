@@ -111,18 +111,17 @@ const Home = () => {
     return returnedRouteData;
   };
   return (
-    <div className="min-h-screen flex flex-col justify-between bg-gray-50">
+    <div className="min-h-screen flex flex-col justify-between my-4 bg-gray-50">
       {/* Main Content */}
-      <div className="flex flex-col items-center p-6">
-        <h2 className="text-lg font-semibold mb-6">
-          Get Your Destination Traffic
-        </h2>
+      <div className="flex flex-col items-center p-2">
+        <h2 className="title">Get Your Destination Traffic</h2>
 
         {/* Location & Destination Inputs */}
-        <div className="space-y-4 w-full max-w-xs">
+        <div className="space-y-4 w-full mt-4 sm:max-w-[50%]">
           {/* Your Location */}
           <form onSubmit={handleSearch}>
             <div className="relative">
+              <small>Your Location</small>
               <div className="flex items-center gap-2">
                 <span className=" text-yellow-500">
                   <MdMyLocation />
@@ -136,47 +135,20 @@ const Home = () => {
                       styles: {
                         input: (provided) => ({
                           ...provided,
-                          padding: "0.75rem", // Tailwind `py-3` and `pl-4`
-                          backgroundColor: "#f3f4f6", // Tailwind `bg-gray-100`
-                          borderRadius: "9999px", // Tailwind `rounded-full`
-                          border: "1px solid #e5e7eb", // Tailwind `border-gray-200`
+                          padding: "0.75rem",
+                          backgroundColor: "none",
+                          borderRadius: "9999px",
                           outline: "none",
                           transition: "border-color 0.2s ease-in-out",
                           "&:focus": {
-                            borderColor: "#f59e0b", // Tailwind `focus:border-yellow-500`
-                            boxShadow: "0 0 0 2px #f59e0b", // Tailwind `focus:ring-2 focus:ring-yellow-500`
+                            borderColor: "transparent",
+                            boxShadow: "0 0 0 2px #f59e0b",
+                            transition: "box-shadow 0.2s ease-in-out",
                           },
-                        }),
-                        control: (provided) => ({
-                          ...provided,
-                          backgroundColor: "#f3f4f6", // Tailwind `bg-gray-100`
-                          borderRadius: "9999px", // Tailwind `rounded-full`
-                          border: "1px solid #e5e7eb", // Tailwind `border-gray-200`
-                          "&:hover": {
-                            borderColor: "#f59e0b", // Tailwind `hover:border-yellow-500`
-                          },
-                        }),
-                        dropdownIndicator: (provided) => ({
-                          ...provided,
-                          color: "#f59e0b", // Tailwind `text-yellow-500`
-                          "&:hover": {
-                            color: "#f59e0b", // Tailwind `hover:text-yellow-500`
-                          },
-                        }),
-                        menu: (provided) => ({
-                          ...provided,
-                          boxShadow: "0 10px 15px -3px rgba(0, 0, 0, 0.1)", // Tailwind `shadow-lg`
-                          padding: "0.5rem 0", // Tailwind `py-2`
-                        }),
-                        option: (provided, state) => ({
-                          ...provided,
-                          backgroundColor: state.isFocused ? "#fef3c7" : "#fff", // Tailwind `bg-yellow-100`
-                          color: "#000",
-                          transition: "background-color 0.2s ease-in-out",
                         }),
                       },
                     }}
-                    apiKey="AIzaSyDdPA4KvHJqpbTOI2Ed_wve_eUIGh9w5p0"
+                    apiKey={import.meta.env.VITE_CLERK_PUBLISHABLE_KEY}
                   />
                 </div>
                 {/* <GooglePlacesAutocomplete
@@ -185,7 +157,7 @@ const Home = () => {
                     onChange: setFrom,
                   }}
                   placeholder="Current Location"
-                  apiKey="AIzaSyDdPA4KvHJqpbTOI2Ed_wve_eUIGh9w5p0"
+                  apiKey=""
                   className="pl-4 w-full p-3 bg-gray-100 rounded-full border border-gray-200 focus:outline-none focus:ring-2 focus:ring-yellow-500"
                 /> */}
                 {/* <input
@@ -197,91 +169,90 @@ const Home = () => {
             </div>
 
             {/* Choose Destination */}
+            <small>Choose Destination</small>
             <div className="flex items-center gap-2">
               <span className=" left-2 top-2 text-yellow-500">
                 <FaLocationDot />
               </span>
-              <input
+              {/* <input
                 type="text"
                 placeholder="Choose destination"
                 className="pl-4 w-full p-3 bg-gray-100 rounded-full border border-gray-200 focus:outline-none focus:ring-2 focus:ring-yellow-500"
-              />
+              /> */}
+              <div className="w-full mb-3">
+                <GooglePlacesAutocomplete
+                  selectProps={{
+                    to,
+                    onChange: setTo,
+                    styles: {
+                      input: (provided) => ({
+                        ...provided,
+                        padding: "0.75rem",
+                        width: "100%",
+                        outline: "none",
+                        borderRadius: "none",
+                        backgroundColor: "none",
+                        transition: "border-color 0.2s ease-in-out",
+                        "&:focus": {
+                          borderColor: "transparent",
+                          boxShadow: "0 0 0 2px #f59e0b",
+                          transition: "box-shadow 0.2s ease-in-out",
+                        },
+                      }),
+                    },
+                  }}
+                  apiKey={import.meta.env.VITE_CLERK_PUBLISHABLE_KEY}
+                />
+              </div>
             </div>
             {/* View Traffic Options Button */}
-            <button
-              type="submit"
-              className="mt-6 w-full max-w-xs p-3 bg-yellow-500 text-white font-semibold rounded-full shadow-lg hover:bg-yellow-600"
-            >
-              View Traffic Options
-            </button>
+            <div className="w-full">
+              <button
+                type="submit"
+                className="mt-6 w-full self-center p-3 bg-yellow-500 text-white font-semibold rounded-full shadow-lg hover:bg-yellow-600"
+              >
+                View Traffic Options
+              </button>
+            </div>
           </form>
         </div>
       </div>
 
-      <div className="min-h-screen sm:w-[65%] mx-auto bg-gray-50 p-6">
+      <div className="min-h-screen sm:w-[50%] mx-auto bg-gray-50 p-6">
         <h2 className="text-lg font-semibold mb-4">Results</h2>
 
         {/* First Card */}
-        <div className="bg-white shadow-lg rounded-lg p-4 mb-6">
-          <div className="flex items-center mb-2 space-x-2">
-            <span className="bg-green-200 text-green-700 font-semibold py-1 px-3 rounded-full text-xs">
-              Light
-            </span>
-            <span className="bg-yellow-200 text-yellow-700 font-semibold py-1 px-3 rounded-full text-xs">
-              Route A
-            </span>
-            <span className="bg-gray-200 text-gray-700 font-semibold py-1 px-3 rounded-full text-xs">
-              125 Km
-            </span>
+        {DATA.map((item, i) => (
+          <div className="bg-white shadow-lg rounded-lg p-4 mb-6" key={i}>
+            <div className="flex items-center mb-2 space-x-2">
+              <span className="bg-green-200 text-green-700 font-semibold py-1 px-3 rounded-full text-xs">
+                {item?.trafficStatus}
+              </span>
+              <span className="bg-yellow-200 text-yellow-700 font-semibold py-1 px-3 rounded-full text-xs">
+                {item?.via}
+              </span>
+              <span className="bg-gray-200 text-gray-700 font-semibold py-1 px-3 rounded-full text-xs">
+                {item?.distance}
+              </span>
+            </div>
+            <h3 className="text-xl font-semibold">to</h3>
+            <p className="text-gray-600">{item?.via}</p>
+
+            <hr className="my-4" />
+
+            <p className="text-gray-600 text-sm mb-4">
+              On normal traffic, estimated time is usually{" "}
+              <span className="font-bold">{item?.normalTime}</span>. Current
+              traffic shows a <span className="font-bold">43 min</span> delay,
+              giving a total of{" "}
+              <span className="font-bold">{item?.trafficTime}</span> on this
+              route.
+            </p>
+            <div className="bg-yellow-100 text-yellow-700 font-semibold text-center py-3 rounded-lg">
+              Estimated Arrival at 2:42 PM
+            </div>
           </div>
-          <h3 className="text-xl font-semibold">Eputu Mall</h3>
-          <p className="text-gray-600">
-            Via Third Mainland Bridge, Lagos - Ojo Expressway
-          </p>
-
-          <hr className="my-4" />
-
-          <p className="text-gray-600 text-sm mb-4">
-            On normal traffic, estimated time is usually{" "}
-            <span className="font-bold">1hr 17 min</span>. Current traffic shows
-            a <span className="font-bold">43 min</span> delay, giving a total of{" "}
-            <span className="font-bold">2hrs</span> on this route.
-          </p>
-          <div className="bg-yellow-100 text-yellow-700 font-semibold text-center py-3 rounded-lg">
-            Estimated Arrival at 2:42 PM
-          </div>
-        </div>
-
-        {/* Second Card */}
-        {/* <div className="bg-white shadow-lg rounded-lg p-4">
-          <div className="flex items-center mb-2 space-x-2">
-            <span className="bg-yellow-300 text-yellow-800 font-semibold py-1 px-3 rounded-full text-xs">
-              Moderate
-            </span>
-            <span className="bg-yellow-200 text-yellow-700 font-semibold py-1 px-3 rounded-full text-xs">
-              Route B
-            </span>
-            <span className="bg-gray-200 text-gray-700 font-semibold py-1 px-3 rounded-full text-xs">
-              120 Km
-            </span>
-          </div>
-          <h3 className="text-xl font-semibold">Eputu Mall</h3>
-          <p className="text-gray-600">
-            Via, Carter Bridge, Idumota - CMS Expressway
-          </p>
-
-          <hr className="my-4" />
-
-          <p className="text-gray-600 text-sm mb-4">
-            On normal traffic, estimated time is usually{" "}
-            <span className="font-bold">1hr 17 min</span>. Current traffic shows
-            a <span className="font-bold">1hr 43 min</span> delay, giving a
-            total of <span className="font-bold">3hrs</span> on this route.
-          </p>
-          <div className="bg-yellow-100 text-yellow-700 font-semibold text-center py-3 rounded-lg">
-            Estimated Arrival at 4:30 PM
-          </div>
-        </div> */}
+        ))}
       </div>
 
       <div className="h-[500px]"></div>
