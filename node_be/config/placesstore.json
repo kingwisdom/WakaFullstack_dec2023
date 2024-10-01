@@ -1,0 +1,15 @@
+{
+    "places": [
+        {
+            "id": 1,
+            "name": "Afe Place 1",
+            "description": "Description 1",
+            "address": "Address 1",
+            "city": "City 1",
+            "state": "State 1",
+            "country": "Country 1",
+            "lat": 1.0,
+            "long": 1.0
+        }
+    ]
+}

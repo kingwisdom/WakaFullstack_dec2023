@@ -1,6 +1,7 @@
-const placesController = require('../controller/placesController.js')
+import express from 'express';
+import placesController from '../controller/placesController.js';
 
-const router = require('express').Router();
+const router = express.Router();
 
 //Swagger schema definitions
 
@@ -215,5 +216,4 @@ router.delete('/:id', placesController.deletePlace);
 router.delete('/bulkUpload/:isTest', placesController.bulkPlaceUploadFromFile);
 
 
-
-module.exports = router;
+export default router;
