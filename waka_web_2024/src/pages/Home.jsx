@@ -53,27 +53,19 @@ const Home = () => {
     return timeres;
   };
 
-  const getTrafficColor = (trafficStatus) => {
-    let colour = "";
+  const getTrafficColorClass = (trafficStatus) => {
     switch (trafficStatus) {
       case "None":
-        colour = "#00FF00";
-        break;
+        return "bg-green-200 text-green-700"; // Green background, dark green text for 'None'
       case "Mild":
-        colour = "#e2f567";
-        break;
+        return "bg-yellow-200 text-yellow-700"; // Light yellow background, dark yellow text for 'Mild'
       case "Medium":
-        colour = "#FFBF00";
-        break;
+        return "bg-orange-200 text-orange-700"; // Light orange background, dark orange text for 'Medium'
       case "Heavy":
-        colour = "#FF0000";
-        break;
-
+        return "bg-red-200 text-red-700"; // Light red background, dark red text for 'Heavy'
       default:
-        colour = "#282929";
-        break;
+        return "bg-gray-200 text-gray-700"; // Default case for undefined statuses
     }
-    return colour;
   };
   const getContent = () => {
     if (isLoading) {
@@ -84,32 +76,61 @@ const Home = () => {
   const trafficAnalysis = (respObj) => {
     let returnedRouteData = [];
     let majorRoutes = respObj.resourceSets[0].resources;
-    for (let i = 0; i < majorRoutes.length; i++) {
-      let routeData = {
-        trafficStatus: majorRoutes[i].trafficCongestion,
-        trafficColor: getTrafficColor(majorRoutes[i].trafficCongestion),
-        normalTime: formatTime(
-          new Date(majorRoutes[i].travelDuration * 1000)
-            .toISOString()
-            .substring(11, 19)
-        ),
-        trafficTime: formatTime(
-          new Date(majorRoutes[i].travelDurationTraffic * 1000)
-            .toISOString()
-            .substring(11, 19)
-        ),
-        distance: `${Math.round(majorRoutes[i].travelDistance)}km`,
-        via: majorRoutes[i].routeLegs[0].description,
-        startLocation:
-          majorRoutes[i].routeLegs[0].startLocation?.address.formattedAddress,
-        endLocation:
-          majorRoutes[i].routeLegs[0].endLocation?.address.formattedAddress,
-      };
 
-      returnedRouteData.push(routeData);
+    for (let i = 0; i < majorRoutes.length; i++) {
+        // Calculate delay time in seconds
+        const delayInSeconds = majorRoutes[i].travelDurationTraffic - majorRoutes[i].travelDuration;
+
+        // Convert travel time (traffic time) to seconds
+        const trafficTimeInSeconds = majorRoutes[i].travelDurationTraffic;
+
+        // Get the current time as the start time
+        const startTime = new Date(); // Assuming the journey starts now
+
+        // Calculate the arrival time by adding the traffic time to the start time
+        const arrivalTime = new Date(startTime.getTime() + trafficTimeInSeconds * 1000);
+
+        // Format arrival time in AM/PM format
+        const formattedArrivalTime = arrivalTime.toLocaleTimeString([], {
+            hour: '2-digit',
+            minute: '2-digit',
+            hour12: true,
+        });
+
+        let routeData = {
+            trafficStatus: majorRoutes[i].trafficCongestion,
+            trafficColor: getTrafficColorClass('Heavy'),
+            normalTime: formatTime(
+                new Date(majorRoutes[i].travelDuration * 1000)
+                    .toISOString()
+                    .substring(11, 19)
+            ),
+            trafficTime: formatTime(
+                new Date(trafficTimeInSeconds * 1000)
+                    .toISOString()
+                    .substring(11, 19)
+            ),
+            // Add delay time in hours, minutes, and seconds
+            delayTime: formatTime(
+                new Date(delayInSeconds * 1000)
+                    .toISOString()
+                    .substring(11, 19)
+            ),
+            // Add the formatted arrival time (AM/PM format)
+            arrivalTime: formattedArrivalTime,
+            distance: `${Math.round(majorRoutes[i].travelDistance)}km`,
+            via: majorRoutes[i].routeLegs[0].description,
+            startLocation:
+                majorRoutes[i].routeLegs[0].startLocation?.address.formattedAddress,
+            endLocation:
+                majorRoutes[i].routeLegs[0].endLocation?.address.formattedAddress,
+        };
+
+        returnedRouteData.push(routeData);
     }
     return returnedRouteData;
-  };
+};
+
   return (
     <div className="min-h-screen flex flex-col justify-between my-4 bg-gray-50">
       {/* Main Content */}
@@ -151,20 +172,6 @@ const Home = () => {
                     apiKey={import.meta.env.VITE_CLERK_PUBLISHABLE_KEY}
                   />
                 </div>
-                {/* <GooglePlacesAutocomplete
-                  selectProps={{
-                    from,
-                    onChange: setFrom,
-                  }}
-                  placeholder="Current Location"
-                  apiKey=""
-                  className="pl-4 w-full p-3 bg-gray-100 rounded-full border border-gray-200 focus:outline-none focus:ring-2 focus:ring-yellow-500"
-                /> */}
-                {/* <input
-                type="text"
-                placeholder="Your Location"
-                className="pl-4 w-full p-3 bg-gray-100 rounded-full border border-gray-200 focus:outline-none focus:ring-2 focus:ring-yellow-500"
-              /> */}
               </div>
             </div>
 
@@ -174,11 +181,6 @@ const Home = () => {
               <span className=" left-2 top-2 text-yellow-500">
                 <FaLocationDot />
               </span>
-              {/* <input
-                type="text"
-                placeholder="Choose destination"
-                className="pl-4 w-full p-3 bg-gray-100 rounded-full border border-gray-200 focus:outline-none focus:ring-2 focus:ring-yellow-500"
-              /> */}
               <div className="w-full mb-3">
                 <GooglePlacesAutocomplete
                   selectProps={{
@@ -219,15 +221,14 @@ const Home = () => {
       </div>
 
       <div className="min-h-screen sm:w-[50%] mx-auto bg-gray-50 p-6">
-        <h2 className="text-lg font-semibold mb-4">Results</h2>
-
+        <h2 className="text-lg font-semibold mb-4">Available Routes</h2>
         {/* First Card */}
         {DATA.map((item, i) => (
           <div className="bg-white shadow-lg rounded-lg p-4 mb-6" key={i}>
             <div className="flex items-center mb-2 space-x-2">
-              <span className="bg-green-200 text-green-700 font-semibold py-1 px-3 rounded-full text-xs">
-                {item?.trafficStatus}
-              </span>
+            <span className={`font-semibold py-1 px-3 rounded-full text-xs ${getTrafficColorClass(item?.trafficStatus)}`}>
+              {item?.trafficStatus}
+            </span>
               <span className="bg-yellow-200 text-yellow-700 font-semibold py-1 px-3 rounded-full text-xs">
                 {item?.via}
               </span>
@@ -235,21 +236,20 @@ const Home = () => {
                 {item?.distance}
               </span>
             </div>
-            <h3 className="text-xl font-semibold">to</h3>
+            <h3 className="text-xl font-semibold">via</h3>
             <p className="text-gray-600">{item?.via}</p>
-
             <hr className="my-4" />
 
             <p className="text-gray-600 text-sm mb-4">
               On normal traffic, estimated time is usually{" "}
               <span className="font-bold">{item?.normalTime}</span>. Current
-              traffic shows a <span className="font-bold">43 min</span> delay,
+              traffic shows a <span className="font-bold">{item?.delayTime}</span> delay,
               giving a total of{" "}
               <span className="font-bold">{item?.trafficTime}</span> on this
               route.
             </p>
             <div className="bg-yellow-100 text-yellow-700 font-semibold text-center py-3 rounded-lg">
-              Estimated Arrival at 2:42 PM
+              Estimated Arrival at {item?.arrivalTime}
             </div>
           </div>
         ))}
