@@ -2,8 +2,12 @@ import { promises as fs } from 'fs'; // Destructure 'promises' directly from 'fs
 const filePath = './config/placesstore.json';
 
 export const writePlacesToFile = async (data) => {
-    const jsonData = JSON.stringify(data, null, 2);
+    const existingData = await readPlacesFromFile();
+    existingData.places.push(data);
+    const jsonData = JSON.stringify(existingData, null, 2);
+
     try {
+
         await fs.writeFile(filePath, jsonData); // Use await to write the file
         console.log('JSON data written to', filePath);
     } catch (err) {

@@ -1,15 +1,23 @@
 {
-    "places": [
-        {
-            "id": 1,
-            "name": "Afe Place 1",
-            "description": "Description 1",
-            "address": "Address 1",
-            "city": "City 1",
-            "state": "State 1",
-            "country": "Country 1",
-            "lat": 1.0,
-            "long": 1.0
-        }
-    ]
+  "places": [
+    {
+      "id": "e297ced1-d19b-4e7d-8cb9-d1a1c8213bd3",
+      "name": "Saint Paul's Bus Station, United Kingdom",
+      "address": "Saint Paul's Bus Station, United Kingdom",
+      "category": "BusStation",
+      "city": "Walsall",
+      "latitude": 52.58541107,
+      "longitude": -1.982409
+    },
+    {
+      "id": "d975ea96-49f5-4640-89eb-7bd534eac9b2",
+      "name": "Birmingham New Street, United Kingdom",
+      "address": "Birmingham New Street, United Kingdom",
+      "category": "RailwayStation",
+      "city": "Birmingham",
+      "phoneNumber": "NA",
+      "latitude": 52.47764587,
+      "longitude": -1.89869404
+    }
+  ]
 }

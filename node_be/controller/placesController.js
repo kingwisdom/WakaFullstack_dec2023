@@ -13,27 +13,32 @@
 */
 
 import { writePlacesToFile, readPlacesFromFile } from '../config/storeConfig.js';
-
+import { getLocations } from '../config/placesapiprocessor.js';
+import { v4 as uuidv4 } from 'uuid';
 const Places = readPlacesFromFile();
 
 const addPlaces = async (req, res) => {
-    // let model = {
-    //     id: uuid.v4(),
-    //     imageUrl: req.body.imageUrl,
-    //     name: req.body.title,
-    //     address: req.body.address,
-    //     categoryId: req.body.category,
-    //     cityId: req.body.city,
-    //     phoneNumber: req.body.phoneNumber,
-    //     searchedTimes: req.body.searchedTimes,
-    //     postedBy: req.body.postedBy
-    // }
+    let model = {
+        id: uuidv4(),
+        imageUrl: req.body.imageUrl,
+        name: req.body.name,
+        address: req.body.address,
+        category: req.body.category,
+        city: req.body.city,
+        phoneNumber: req.body.phoneNumber || 'NA',
+        latitude: req.body.latitude,
+        longitude: req.body.longitude,
+        searchedTimes: req.body.searchedTimes,
+        postedBy: req.body.postedBy
+    }
+    
+    await writePlacesToFile(model);
 
-    // const place = await Places.create(model);
     res.status(200).send({
         status: true,
         response: "Place Posted Successfully!",
-        // returnObj: place
+        needsave: true,
+        returnObj: model
     });
 };
 
@@ -43,6 +48,13 @@ const getAllPlaces = async (req, res) => {
         res.status(200).send(places);
     });
 };
+
+const getPlacefromPlacesAPI = async (req, res) => {
+    const apidata = await getLocations(req.query.loc);
+    res.status(200).send(apidata);
+};
+
+
 
 const getPlaceCategorization = async (req, res) => {
     // let sql = 'SELECT waka_db.categories.name AS categoryName, waka_db.places.id AS placeId FROM waka_db.categories JOIN waka_db.places ON waka_db.categories.id = waka_db.places.categoryId;';
@@ -139,6 +151,7 @@ export default {
     addPlaces,
     getAPlace,
     getAllPlaces,
+    getPlacefromPlacesAPI,
     getPlaceInCategory,
     getPlaceInCities,
     updatePlace,

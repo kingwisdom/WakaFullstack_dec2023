@@ -16,9 +16,9 @@ const router = express.Router();
  *         type: string
  *       name:
  *         type: string
- *       categoryId:
+ *       category:
  *         type: string
- *       cityId:
+ *       city:
  *         type: string
  *       address:
  *         type: string
@@ -60,6 +60,24 @@ router.get('/allPlaces', placesController.getAllPlaces);
 
 /**
  * @swagger
+ * /api/place/placesfromapi:
+ *   get:
+ *     description: Get places from Bing Places API
+ *     parameters:
+ *       - name: loc
+ *         in: query
+ *         description: Location query
+ *     responses:
+ *       200:
+ *         description: Array of places
+ *         schema:
+ *           $ref: '#/definitions/Place'
+ * 
+ */
+router.get('/placesfromapi', placesController.getPlacefromPlacesAPI);
+
+/**
+ * @swagger
  * /api/place/placeInCat:
  *   get:
  *     description: Get Places count in Category
@@ -86,7 +104,7 @@ router.get('/allPlaces', placesController.getAllPlaces);
  *         schema:
  *           $ref: '#/definitions/Place'
  *     responses:
- *       201:
+ *       200:
  *         description: Successfully Created
  * 
  */
