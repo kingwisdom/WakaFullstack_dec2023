@@ -1,11 +1,5 @@
 /* TODO: Create another engine for Places
-     - create a STORE for places where selected places from FE will be stored
-        dis: Scenerio 1 = user search will return matches from STORE, if matches cant be found, call Places API and return
-        matches(mark the response as need-to-save). When user selects(clicking visit button) a place from
-        "need-to-save" places, FE will make a call to BE to save the place in our STORE
-        Scenerio 2 = user search will return matches from STORE, matches may be found but user wants to 
-        see more(FE will add see more... button), then call Places API and return matches(mark the response as need-to-save). When user selects(clicking visit button) a place from
-        "need-to-save" places, FE will make a call to BE to save the place in our STORE
+
         - Step: create storeconfig file: perform CRUD on the data here
         - Step: create places API processor file: call virtual earth places here and refine the response
         - Implement places controller methods for the new STORE
@@ -31,7 +25,7 @@ const addPlaces = async (req, res) => {
         searchedTimes: req.body.searchedTimes,
         postedBy: req.body.postedBy
     }
-    
+
     await writePlacesToFile(model);
 
     res.status(200).send({

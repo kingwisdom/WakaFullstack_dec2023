@@ -15,7 +15,6 @@ const Places = () => {
     GetAllPlaces()
       .then((resp) => {
         setPlaces(resp.data.returnObj);
-        // console.log(resp.data)
       })
       .catch((err) => {
         console.log(err);
