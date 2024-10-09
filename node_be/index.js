@@ -29,6 +29,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+app.use('/welcome', (req, res) => res.send('Welcome to Waka App'));
 
 // Router
 import placerouter from './routes/placeRouter.js';
@@ -38,7 +39,7 @@ app.use('/api/place', placerouter);
 const PORT = process.env.PORT || 5000;
 
 // Server
-app.listen();
-// app.listen(PORT, () => {
-//   console.log(`Server is running on port ${PORT}`);
-// });
+// app.listen();
+app.listen(PORT, () => {
+  console.log(`Server is running on port ${PORT}`);
+});
