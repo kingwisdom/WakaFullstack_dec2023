@@ -1,5 +1,6 @@
 import { promises as fs } from 'fs'; // Destructure 'promises' directly from 'fs'
-const filePath = './config/placesstore.json';
+// const filePath = './config/placesstore.json';
+const filePath = process.env.JSON_URL;
 
 export const writePlacesToFile = async (data) => {
     const existingData = await readPlacesFromFile();
