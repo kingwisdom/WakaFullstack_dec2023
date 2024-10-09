@@ -1,6 +1,6 @@
 import { promises as fs } from 'fs'; // Destructure 'promises' directly from 'fs'
 // const filePath = './config/placesstore.json';
-const filePath = process.env.JSON_URL;
+const filePath = "https://6zc4fswo1jbqmzqs.public.blob.vercel-storage.com/placesstore-PUjvuvgpYUgq7ArIDOB6Egggjyw7eb.json";
 
 export const writePlacesToFile = async (data) => {
     const existingData = await readPlacesFromFile();
