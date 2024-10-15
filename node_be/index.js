@@ -3,6 +3,8 @@ import cors from 'cors';
 import swaggerJsDoc from 'swagger-jsdoc';
 import swaggerUi from 'swagger-ui-express';
 
+
+const CSS_URL = "https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/4.1.0/swagger-ui.min.css";
 const swaggerOptions = {
   swaggerDefinition: {
     info: {
@@ -15,7 +17,6 @@ const swaggerOptions = {
 
 // Swagger Docs
 const swaggerDocument = swaggerJsDoc(swaggerOptions);
-console.log(swaggerDocument);
 
 const app = express();
 
@@ -28,7 +29,7 @@ app.use(cors(corsOptions));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument, { customCssUrl: CSS_URL }));
 
 // Router
 import placerouter from './routes/placeRouter.js';
