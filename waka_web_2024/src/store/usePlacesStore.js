@@ -26,7 +26,7 @@ export const usePlacesStore = create((set) => ({
         } catch (err) {
             console.log(err)
             set({ places: [] })
-            toast.error(err.response.data.message || "Something went wrong")
+            toast.error(err.response.data.message || "Something went wrongsss")
         }
         finally {
             set({ loading: false })
