@@ -6,6 +6,7 @@ import { axiosInstance } from "../lib/axios"
 export const usePlacesStore = create((set) => ({
     places: [],
     loading: false,
+    searchPlacesResult: [],
     getPlaces: async () => {
         try {
             const res = await axiosInstance.get('/place/allPlaces')
@@ -20,8 +21,7 @@ export const usePlacesStore = create((set) => ({
         try {
             set({ loading: true })
             const res = await axiosInstance.get(`place/placesfromapi?loc=${search.search}`)
-            // set({ places: res.data })
-            console.log(res.data)
+            set({ searchPlacesResult: res.data })
             toast.success("Places found")
         } catch (err) {
             console.log(err)
